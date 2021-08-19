@@ -17,7 +17,7 @@ $(document).ready(function () {
     text: [
       "madduccino",
       "Hi, my name's Maddy. I'm a developer and run a company that teaches kids how to code.",
-      "The most influential project I've contributed to is WoofJS. Woof teaches kids JavaScript through making web-based games like this one...",
+      "One of the biggest projects I've worked on is WoofJS. Woof teaches kids JavaScript through making web-based games like this one...",
       "Woof has over 8,000 users and has been adopted by teachers around the world. It was built with Vue, HTML Canvas, and Firebase. You can view my contributions on <a href='github.com'>Github</a>.",
       "Learn more about my work.",
     ],
@@ -123,6 +123,17 @@ $(document).ready(function () {
     $(".screen2").append(
       "<div class='par'><div class='slideUp'><a target='_blank' href='https://thecodingspace.com'><img src='./images/rocket.png'><div class='sky'><div class='cloud'></div><p>Learn more about <br>The Coding Space</p></div></a>"
     );
+    $(".bi").hover(handlerIn, handlerOut);
+  };
+  var count = 0;
+
+  const handlerIn = () => {
+    if (count === 0) $(".bi").append('<div class="cont">Continue</div>');
+    count = 1;
+  };
+  const handlerOut = () => {
+    $(".cont").remove();
+    count = 0;
   };
 
   const screen4 = async () => {
@@ -143,35 +154,134 @@ $(document).ready(function () {
 
     var randomColors = ["CadetBlue", "Chartreuse", "DarkCyan"];
 
-    var exit = new Text({
-      text: () => "Exit",
+    setBackdropColor("black");
+
+    forever(() => {
+      if (alien.x >= maxX - 100) {
+        alien.x = 0;
+        setTimeout(() => {
+          $("#project").css("display", "none");
+          $(".screen2").css("display", "block");
+          $(".wrapper").css(
+            "backgroundColor",
+            randomColors[Math.floor(Math.random() * randomColors.length)]
+          );
+          $(".menu div").addClass("white");
+
+          $(window).bind("mousewheel", playWoof);
+          $(".next").fadeIn();
+          $(".next i").fadeIn();
+
+          music.pausePlaying();
+        }, 100);
+      }
+    });
+    // start WoofJS.com
+
+    setBackdropColor("black");
+    var jumping = false;
+    var go = false;
+
+    var line = new Text({
+      text: () => "Catch the biggest star!",
       color: "white",
-      size: 40,
-      x: maxX - 50,
-      y: minY + 50,
+      y: 100,
+      size: 25,
+    });
+
+    var line1 = new Text({
+      text: () => "Use the arrow keys or click/tap to move left and right",
+      color: "white",
+      y: 65,
+      size: 15,
+    });
+
+    var line2 = new Text({
+      text: () => "Press space or click/tap alien to jump",
+      color: "white",
+      y: 35,
+      size: 15,
+    });
+
+    var line3 = new Text({
+      text: () => "Head on over to the exit sign to leave",
+      color: "white",
+      y: 5,
+      size: 15,
+    });
+
+    var line4 = new Text({
+      text: () => "Click/tap alien to continue",
+      color: "white",
+      y: -25,
+      size: 25,
+      showing: false,
+    });
+
+    after(2, "second", () => {
+      every(1, "second", () => {
+        if (!go) {
+          line4.show();
+        }
+      });
+      every(2, "second", () => {
+        line4.hide();
+      });
+    });
+
+    var instructions = [line, line1, line2, line3, line4];
+    onMouseDown(() => {
+      if (!go && alien.mouseOver) {
+        instructions.forEach((line) => {
+          go = true;
+          line.hide();
+        });
+      }
+    });
+
+    every(1, "second", () => {
+      after(1, "second", () => {
+        if (go) {
+          time++;
+        }
+      });
+    });
+
+    instructions.forEach((line) => {
+      if (!go && mouseDown) {
+        go = true;
+        line.hide();
+      }
     });
 
     var background = new Image({
-      url: "./images/background.png",
+      url: "https://madduccino.com/images/background.png",
     });
 
+    var exit = new Text({
+      text: () => "Exit =>",
+      color: "white",
+      size: 25,
+      x: maxX - 70,
+      y: minY + 35,
+    });
     var costumes = [
-      "./images/baby-alien-walking1.png",
-      "./images/baby-alien-walking2.png",
-      "./images/baby-alien-walking3.png",
-      "./images/baby-alien-walking4.png",
-      "./images/baby-alien-walking5.png",
-      "./images/baby-alien-walking6.png",
-      "./images/baby-alien-walking7.png",
-      "./images/baby-alien-walking8.png",
-      "./images/baby-alien-walking9.png",
-      "./images/baby-alien-walking10.png",
-      "./images/baby-alien-walking11.png",
-      "./images/baby-alien-walking12.png",
-      "./images/baby-alien-walking13.png",
-      "./images/baby-alien-walking14.png",
-      "./images/baby-alien-walking15.png",
-      "./images/baby-alien-walking16.png",
+      "https://www.madduccino.com/images/baby-alien-walking1.png",
+      "https://www.madduccino.com/images/baby-alien-walking2.png",
+      "https://www.madduccino.com/images/baby-alien-walking3.png",
+      "https://www.madduccino.com/images/baby-alien-walking4.png",
+      "https://www.madduccino.com/images/baby-alien-walking5.png",
+      "https://www.madduccino.com/images/baby-alien-walking6.png",
+      "https://www.madduccino.com/images/baby-alien-walking7.png",
+      "https://www.madduccino.com/images/baby-alien-walking8.png",
+      "https://www.madduccino.com/images/baby-alien-walking9.png",
+      "https://www.madduccino.com/images/baby-alien-walking10.png",
+      "https://www.madduccino.com/images/baby-alien-walking11.png",
+      "https://www.madduccino.com/images/baby-alien-walking12.png",
+      "https://www.madduccino.com/images/baby-alien-walking13.png",
+      "https://www.madduccino.com/images/baby-alien-walking14.png",
+      "https://www.madduccino.com/images/baby-alien-walking15.png",
+      "https://www.madduccino.com/images/baby-alien-walking16.png",
     ];
 
     var n = 0;
@@ -180,100 +290,201 @@ $(document).ready(function () {
       url: costumes[0],
       width: 100,
       height: 150,
-      y: maxY + 150,
+      x: minX + 50,
+      y: maxY,
+      xvel: 10,
     });
 
-    var yvel = -1;
-    var xvel = 8;
+    var yvel = -5;
     var ground = minY + alien.height / 2 + 7;
 
-    forever(() => {
-      after(0.1, "second", () => {
-        alien.y += yvel;
-        exit.sendToFront();
-        yvel -= 0.3;
-        if (alien.x >= maxX - 100) {
-          alien.x = 0;
-          setTimeout(() => {
-            $("#project").css("display", "none");
-            $(".screen2").css("display", "block");
-            $(".wrapper").css(
-              "backgroundColor",
-              randomColors[Math.floor(Math.random() * randomColors.length)]
-            );
-            $(".menu div").addClass("white");
-
-            $(window).bind("mousewheel", playWoof);
-            $(".next").fadeIn();
-            $(".next i").fadeIn();
-
-            music.pausePlaying();
-          }, 100);
-        }
-        if (alien.x <= minX) {
-          alien.x = minX + 50;
-        }
-        if (alien.y <= ground) {
-          yvel = 0;
-          yvel.y = ground;
-          if (keysDown.includes("SPACE")) {
-            yvel = 8;
-          }
-        }
-      });
-    });
+    var planets = [];
 
     var planet = new Image({
-      url: "./images/planet.png",
+      url: "https://madduccino.com/images/planet.png",
       width: 50,
       height: 50,
       y: ground - 50,
       x: 140,
     });
 
+    var planet2 = new Image({
+      url: "https://madduccino.com/images/planet.png",
+      width: 50,
+      height: 50,
+      y: ground,
+      x: -100,
+    });
+
+    var planet3 = new Image({
+      url: "https://madduccino.com/images/planet.png",
+      width: 50,
+      height: 50,
+      y: planet2.y + 100,
+      x: planet2.x + 150,
+    });
+
+    var planet4 = new Image({
+      url: "https://madduccino.com/images/planet.png",
+      width: 50,
+      height: 50,
+      y: planet3.y + 80,
+      x: planet3.x - 180,
+    });
+
+    var planet5 = new Image({
+      url: "https://madduccino.com/images/planet.png",
+      width: 50,
+      height: 50,
+      y: planet3.y + 200,
+      x: planet3.x + 20,
+    });
+
+    var planet6 = new Image({
+      url: "https://madduccino.com/images/planet.png",
+      width: 50,
+      height: 50,
+      y: planet3.y + 200,
+      x: planet3.x + 150,
+    });
+
+    planets.push(planet, planet2, planet3, planet4, planet5, planet6);
+
+    var finish = new Image({
+      url: "https://madduccino.com/images/star.png",
+      width: 40,
+      height: 40,
+      x: planet6.x + 50,
+      y: planet5.y + 160,
+    });
+
+    forever(() => {
+      alien.y += yvel;
+      yvel -= 0.3;
+      if (alien.x > maxX) {
+        alien.x = minX;
+      }
+      if (alien.x < minX) {
+        alien.x = maxX;
+      }
+      if (alien.y <= ground) {
+        yvel = 0;
+        alien.y = ground;
+      }
+      jumping =
+        go && (keysDown.includes("SPACE") || (mouseDown && mouseY > alien.y));
+    });
+
+    // var debug = new Text({
+    //   text: () => jumping,
+    //   color: "blue",
+    //   y: -100,
+    //   size: 50
+    // })
+    var xvel = 10;
+
+    // INTERPLANETARY TRAVEL
+
     forever(() => {
       background.x = alien.x;
       background.y = alien.y;
-      if (alien.distanceTo(planet) < 70 && alien.y === ground) {
-        if (alien.y > ground) {
-          xvel = 0;
-        } else {
+
+      planets.forEach((planeto) => {
+        planeto.sendToBack();
+        if (alien.distanceTo(planeto) < 70 && alien.x != planeto.x) {
           alien.move(-xvel);
         }
-      }
+        if (alien.distanceTo(planeto) < 70 && alien.y < planeto.y) {
+          alien.move(-yvel);
+        }
+        if (
+          alien.y > ground &&
+          alien.y > planeto.y &&
+          alien.touching(planeto) &&
+          abs(planeto.x - alien.x) <= 40 &&
+          !jumping
+        ) {
+          alien.y = planeto.y + planeto.height * 2 - 10;
+          yvel = 0;
+        }
+        if (
+          (alien.y === ground ||
+            alien.y === planeto.y + planeto.height * 2 - 10) &&
+          jumping
+        ) {
+          yvel = 8;
+        }
+        if (alien.touching(finish)) {
+          finish.x = alien.x;
+          finish.y = alien.y;
+          alien.y -= 1;
+          if (alien.y < ground) {
+            alien.y = ground;
+            finish.x = planet6.x + 50;
+            finish.y = planet6.y + 160;
+            time = 0;
+          }
+        }
+      });
+    });
+    var time = 0;
+
+    var timer = new Text({
+      text: () => "Time: " + time,
+      color: "white",
+      x: minX + 60,
+      y: maxY - 60,
+      size: 30,
     });
 
     alien.setRotationStyle("ROTATE LEFT RIGHT");
 
     forever(() => {
       planet.sendToBack();
+      line.sendToFront();
+      line1.sendToFront();
+      line2.sendToFront();
+      line3.sendToFront();
+      line4.sendToFront();
     });
 
     forever(() => {
-      if (keysDown.includes("RIGHT")) {
-        alien.angle = RIGHT;
-        n++;
-        if (n === costumes.length) {
-          n = 0;
+      if (go) {
+        if (
+          keysDown.includes("RIGHT") ||
+          (mouseDown &&
+            mouseX > alien.x &&
+            mouseY <= alien.y + alien.height / 2)
+        ) {
+          alien.angle = RIGHT;
+          n++;
+          if (n === costumes.length) {
+            n = 0;
+          }
+          alien.setImageURL(costumes[n]);
+          alien.move(xvel);
         }
-        alien.setImageURL(costumes[n]);
-        alien.move(xvel);
-      }
-      if (keysDown.includes("LEFT")) {
-        n++;
-        if (n === costumes.length) {
-          n = 0;
+        if (
+          keysDown.includes("LEFT") ||
+          (mouseDown &&
+            mouseX < alien.x &&
+            mouseY <= alien.y + alien.height / 2)
+        ) {
+          n++;
+          if (n === costumes.length) {
+            n = 0;
+          }
+          alien.setImageURL(costumes[n]);
+          alien.angle = LEFT;
+          alien.move(xvel);
         }
-        alien.setImageURL(costumes[n]);
-        alien.angle = LEFT;
-        alien.move(xvel);
       }
     });
 
     var stars = [];
     range(0, 40).forEach((counter) => {
       var star = new Image({
-        url: "./images/star.png",
+        url: "https://madduccino.com/images/star.png",
         width: 10,
         height: 10,
         x: random(minX - 200, maxX + 200),
@@ -284,28 +495,38 @@ $(document).ready(function () {
 
     forever(() => {
       stars.forEach((star) => {
-        if (keysDown.includes("LEFT")) {
-          star.move(2);
-          stars.angle = RIGHT;
-        }
-        if (keysDown.includes("RIGHT")) {
-          stars.angle = LEFT;
-          star.move(-2);
-        }
-        if (yvel > 0) {
-          star.y += 2;
-        }
-        if (yvel < 0) {
-          star.y -= 2;
+        if (go) {
+          if (keysDown.includes("LEFT")) {
+            star.move(2);
+            stars.angle = RIGHT;
+          }
+          if (keysDown.includes("RIGHT")) {
+            stars.angle = LEFT;
+            star.move(-2);
+          }
+          if (yvel > 0) {
+            star.y += 2;
+          }
+          if (yvel < 0) {
+            star.y -= 2;
+          }
+          if (stars.y > maxY || stars.y < minY) {
+            stars.y = !stars.y;
+          }
+          if (stars.x > maxX || stars.y < minX) {
+            stars.x = !stars.x;
+          }
         }
       });
     });
   };
 
   $(".next i").click(async () => {
+    $("body").css("backgroundColor", "rgb(129, 206, 232)");
+
     $(".wrapper").removeClass("fade").addClass("expand");
 
-    console.log(countSlides);
+    console.log("yallo");
     if (countSlides === 1) {
       $(".wrapper").css("backgroundColor", "teal");
       $(".next i").css("display", "none");

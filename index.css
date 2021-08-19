@@ -220,6 +220,7 @@ div.slideUp {
   justify-content: center;
   align-content: center;
   flex-flow: column wrap;
+  z-index: 99;
 }
 
 .menu-items a {
@@ -242,6 +243,15 @@ div.slideUp {
 
 .bi {
   cursor: pointer;
+  position: relative;
+}
+
+.cont {
+  position: absolute;
+  font-size: 12px;
+  font-style: normal;
+  left: 0px;
+  top: 50%;
 }
 
 .sky p {
@@ -249,8 +259,6 @@ div.slideUp {
   font-size: 0.5em;
   text-align: center;
   font-weight: bold;
-  text-shadow: 1px 0 0 blue;
-  color: #81cee8;
 }
 
 .cloud {
